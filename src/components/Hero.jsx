@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { IoMdCloseCircle } from "react-icons/io";
-import FormUI from "../Forms/FormUI";
+import AddProductForm from "./AddNewProduct";
+// import ProductForm from "../Forms/ProductForm";
 
 export const Hero = () => {
   const [openModal, setOpenModal] = useState(false);
-  console.log("Modal...", openModal);
   return (
     <>
       {openModal ? (
@@ -19,7 +19,7 @@ export const Hero = () => {
             </div>
 
             <h1>form opened</h1>
-            <FormUI />
+            <AddProductForm />
           </div>
         </Modal>
       ) : null}

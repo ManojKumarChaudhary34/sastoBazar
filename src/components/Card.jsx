@@ -1,11 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchProducts } from "../api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteProduct, fetchProducts } from "../api";
+import { useState } from "react";
+import Modal from "./Modal";
+import { IoMdCloseCircle } from "react-icons/io";
+import AddProductForm from "./AddNewProduct";
 
 const Card = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const queryClient = useQueryClient();
   //Fetch data from api
   const { data, isLoading, error } = useQuery({
     queryKey: ["getProducts"],
     queryFn: fetchProducts,
+  });
+  //function to delete product
+  const deleteMutation = useMutation({
+    mutationFn: (id) => deleteProduct(id),
+    onSuccess: (data, id) => {
+      console.log(data, id);
+      queryClient.setQueryData(["getProducts"], (currProduct) => {
+        return currProduct?.filter((productId) => productId.id !== id);
+      });
+    },
   });
   if (isLoading) {
     return <h2>loading....</h2>;
@@ -16,8 +32,24 @@ const Card = () => {
   if (!data) {
     return <div>No Data</div>;
   }
+
   return (
     <>
+      {openModal ? (
+        <Modal>
+          <div className="bg-white w-2/6 rounded-md p-4">
+            <div className="flex justify-end">
+              <IoMdCloseCircle
+                onClick={() => setOpenModal(false)}
+                className="text-red-500 text-xl cursor-pointer"
+              />
+            </div>
+
+            <h1>form opened</h1>
+            <AddProductForm />
+          </div>
+        </Modal>
+      ) : null}
       <div className="grid grid-cols-4 gap-4 bg-slate-500">
         {data.map((eachProduct) => {
           return (
@@ -45,11 +77,12 @@ const Card = () => {
                 <div className="flex flex-col gap-2 mt-1 mr-1 absolute top-0 right-0 ">
                   <img
                     className="h-4 hidden group-hover:block hover:bg-slate-400"
-                    onClick={() => console.log(`${eachProduct.id}`)}
+                    onClick={() => setOpenModal(true)}
                     src="update.png"
                     alt="edit image"
                   />
                   <img
+                    onClick={() => deleteMutation.mutate(eachProduct.id)}
                     className="h-4 hidden group-hover:block"
                     src="delete.png"
                     alt="delete image"
