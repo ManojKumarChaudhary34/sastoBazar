@@ -20,7 +20,7 @@ const addProductFormSchema = object({
   }),
 });
 
-const AddProductForm = () => {
+const AddProductForm = ({ initialValue }) => {
   const client = useQueryClient();
   const mutation = useMutation({
     mutationFn: addProduct,
@@ -38,7 +38,7 @@ const AddProductForm = () => {
   return (
     <Formik
       initialValues={{
-        title: "",
+        title: initialValue.title || "",
         price: "",
         image: "",
       }}
@@ -47,9 +47,9 @@ const AddProductForm = () => {
 
         await mutation.mutateAsync({
           id: uuidv4(),
-          title: values.title,
-          price: Number(values.price),
-          image: values.image,
+          title: values.title || "",
+          price: Number(values.price) || "",
+          image: values.image || "",
         });
         resetForm();
       }}

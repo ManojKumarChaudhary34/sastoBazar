@@ -35,3 +35,17 @@ export const deleteProduct = async (id) => {
   }
   return response.json();
 };
+
+export const updateProduct = async (id) => {
+  const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(),
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+};

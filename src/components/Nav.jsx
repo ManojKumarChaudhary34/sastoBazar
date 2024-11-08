@@ -1,24 +1,42 @@
+import { RxHamburgerMenu } from "react-icons/rx";
 export const Nav = () => {
   return (
-    <nav className="bg-slate-500 flex justify-between h-20 items-center">
-      <div className="w-24">
-        <img src="logo.png" alt="logo" />
-      </div>
-      <li className="space-x-6 flex uppercase">
-        <ul>home</ul>
-        <ul>men</ul>
-        <ul>women</ul>
-        <ul>electronics</ul>
-        <ul>jowelery</ul>
-      </li>
-      <div className="flex space-x-6">
-        <img className="w-5" src="search.png" alt="search image" />
-        <img
-          className="w-5"
-          src="shopping-cart.png"
-          alt="shopping-cart image"
-        />
-      </div>
-    </nav>
+    <>
+      <nav className="grid grid-cols-[0.5fr_1fr] h-32 items-center">
+        <div className="w-44">
+          <img className="min-w-44" src="logo.png" alt="logo" />
+        </div>
+        <li className="gap-14 hidden h-32 items-center sm:md:flex justify-end">
+          <ul>
+            <a href="#" className="hover:text-primary-clr hover:underline">
+              Home
+            </a>
+          </ul>
+          <ul>
+            <a href="#" className="hover:text-primary-clr hover:underline">
+              Men
+            </a>
+          </ul>
+          <ul>
+            <a href="#" className="hover:text-primary-clr hover:underline">
+              Women
+            </a>
+          </ul>
+          <ul>
+            <a href="#" className="hover:text-primary-clr hover:underline">
+              Electronics
+            </a>
+          </ul>
+          <ul>
+            <a href="#" className="hover:text-primary-clr hover:underline">
+              Jowelery
+            </a>
+          </ul>
+        </li>
+        <div className="flex justify-end">
+          <RxHamburgerMenu className="text-4xl cursor-pointer hover:text-primary-clr sm:md:hidden" />
+        </div>
+      </nav>
+    </>
   );
 };

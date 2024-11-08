@@ -4,9 +4,11 @@ import { useState } from "react";
 import Modal from "./Modal";
 import { IoMdCloseCircle } from "react-icons/io";
 import AddProductForm from "./AddNewProduct";
+import { UpdateProduct } from "./UpdateProduct";
 
 const Card = () => {
   const [openModal, setOpenModal] = useState(false);
+
   const queryClient = useQueryClient();
   //Fetch data from api
   const { data, isLoading, error } = useQuery({
@@ -23,6 +25,7 @@ const Card = () => {
       });
     },
   });
+
   if (isLoading) {
     return <h2>loading....</h2>;
   }
@@ -32,6 +35,7 @@ const Card = () => {
   if (!data) {
     return <div>No Data</div>;
   }
+  console.log("ram", data);
 
   return (
     <>
@@ -77,7 +81,7 @@ const Card = () => {
                 <div className="flex flex-col gap-2 mt-1 mr-1 absolute top-0 right-0 ">
                   <img
                     className="h-4 hidden group-hover:block hover:bg-slate-400"
-                    onClick={() => setOpenModal(true)}
+                    onClick={() => <UpdateProduct />}
                     src="update.png"
                     alt="edit image"
                   />

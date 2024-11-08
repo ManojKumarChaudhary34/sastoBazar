@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
 #root {
   max-width: 1000px;
   margin: 0 auto;
+  padding: 0 3.2rem;
+}
+html{
+  font-size: 62.5%;
+  font-family: "urbanist";
+}
+p,li,a,button{
+  font-size: 1.7rem;
+  letter-spacing: .1rem;
 }

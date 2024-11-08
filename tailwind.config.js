@@ -8,7 +8,7 @@ export default {
     extend: {
       colors:{
         'bg-image':'#F0EEED',
-        'text-clr':'#C25555',
+        'primary-clr':'#921A40',
       }
     },
   },

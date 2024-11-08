@@ -2,7 +2,6 @@ import { useState } from "react";
 import Modal from "./Modal";
 import { IoMdCloseCircle } from "react-icons/io";
 import AddProductForm from "./AddNewProduct";
-// import ProductForm from "../Forms/ProductForm";
 
 export const Hero = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -24,16 +23,27 @@ export const Hero = () => {
         </Modal>
       ) : null}
 
-      <section className="flex items-center">
+      <section className="h-auto flex flex-col items-center gap-5 pb-8 sm:md:flex sm:md:flex-row-reverse">
         <div>
-          <h1>Your One-Stop Shop for Everything You Need</h1>
-          <p>Fast Delivery, Exclusive Deals, and Premium Quality Guaranteed!</p>
-          <button onClick={() => setOpenModal(true)} className="bg-orange-800">
+          <img
+            className="h-[250px] sm:h-[300px] md:h-[350px] items-center"
+            src="banner.jpg"
+            alt="hero section image"
+          />
+        </div>
+        <div className="flex flex-col items-center sm:md:flex sm:md:flex-col gap-4">
+          <h1 className="text-4xl font-bold">
+            Your One-Stop Shop for Everything You Need
+          </h1>
+          <p className="text-xl">
+            Fast Delivery, Exclusive Deals, and Premium Quality Guaranteed!
+          </p>
+          <button
+            onClick={() => setOpenModal(true)}
+            className="bg-black hover:bg-primary-clr px-6 py-2 w-fit rounded-lg text-white"
+          >
             Add item
           </button>
-        </div>
-        <div>
-          <img src="banner.jpg" alt="hero section image" />
         </div>
       </section>
     </>
