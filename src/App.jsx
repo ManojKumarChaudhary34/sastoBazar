@@ -1,5 +1,5 @@
 import "./App.css";
-import Card from "./components/Card";
+import CardList from "./components/CardList";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <Nav />
       <Hero />
-      <Card />
+      <CardList />
     </>
   );
 }

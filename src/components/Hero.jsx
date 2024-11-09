@@ -17,7 +17,7 @@ export const Hero = () => {
               />
             </div>
 
-            <h1>form opened</h1>
+            <h1 className="text-2xl">Product Form:</h1>
             <AddProductForm />
           </div>
         </Modal>
@@ -31,16 +31,16 @@ export const Hero = () => {
             alt="hero section image"
           />
         </div>
-        <div className="flex flex-col items-center sm:md:flex sm:md:flex-col gap-4">
-          <h1 className="text-4xl font-bold">
+        <div className="flex flex-col items-center sm:md:flex sm:md:flex-col sm:md:items-start gap-4">
+          <h1 className="text-3xl sm:md:text-4xl font-bold">
             Your One-Stop Shop for Everything You Need
           </h1>
-          <p className="text-xl">
+          <p className="text-base sm:md:text-xl">
             Fast Delivery, Exclusive Deals, and Premium Quality Guaranteed!
           </p>
           <button
             onClick={() => setOpenModal(true)}
-            className="bg-black hover:bg-primary-clr px-6 py-2 w-fit rounded-lg text-white"
+            className="bg-black hover:bg-primary-clr text-2xl sm:md:text-3xl px-6 py-2 w-fit rounded-lg text-white"
           >
             Add item
           </button>

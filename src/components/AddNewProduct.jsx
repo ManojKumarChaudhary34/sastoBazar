@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik";
-import { object, string } from "zod";
+import { object, string, z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
@@ -14,13 +14,16 @@ const addProductFormSchema = object({
   price: string({
     required_error: "*Please enter a price",
   }),
-
+  description: string({
+    required_error: "*Please enter a description",
+  }),
   image: string({
     required_error: "*Image is required",
   }),
+  category: z.string().min(3, "*Category must be at least 3 characters long"),
 });
 
-const AddProductForm = ({ initialValue }) => {
+const AddProductForm = () => {
   const client = useQueryClient();
   const mutation = useMutation({
     mutationFn: addProduct,
@@ -38,18 +41,22 @@ const AddProductForm = ({ initialValue }) => {
   return (
     <Formik
       initialValues={{
-        title: initialValue.title || "",
+        title: "",
         price: "",
         image: "",
+        description: "",
+        category: "",
       }}
       onSubmit={async (values, { resetForm }) => {
         console.log("form data...", values);
 
         await mutation.mutateAsync({
           id: uuidv4(),
-          title: values.title || "",
-          price: Number(values.price) || "",
-          image: values.image || "",
+          title: values.title,
+          price: Number(values.price),
+          image: values.image,
+          description: values.description,
+          category: values.category,
         });
         resetForm();
       }}
@@ -58,8 +65,22 @@ const AddProductForm = ({ initialValue }) => {
       {({ errors }) => (
         <Form>
           <div className="p-4">
+            <div className="mt-4">
+              <label className="text-xl font-semibold text-black">
+                Image URL
+              </label>
+              <Field
+                type="text"
+                name="image"
+                placeholder="Enter image url"
+                className="rounded-lg w-full border border-gray-300 p-2"
+              />
+              {!!errors.image && (
+                <div className="text-red-500 pt-2">{errors.image}</div>
+              )}
+            </div>
             <div>
-              <label className="text-md font-semibold text-black">Title</label>
+              <label className="text-xl font-semibold text-black">Title</label>
               <Field
                 type="text"
                 name="title"
@@ -72,7 +93,7 @@ const AddProductForm = ({ initialValue }) => {
             </div>
 
             <div className="mt-4">
-              <label className="text-md font-semibold text-black">Price</label>
+              <label className="text-xl font-semibold text-black">Price</label>
               <Field
                 type="text"
                 name="price"
@@ -83,17 +104,32 @@ const AddProductForm = ({ initialValue }) => {
                 <div className="text-red-500 pt-2">{errors.price}</div>
               )}
             </div>
-
             <div className="mt-4">
-              <label className="text-md font-semibold text-black">Image</label>
+              <label className="text-xl font-semibold text-black">
+                Description
+              </label>
               <Field
                 type="text"
-                name="image"
-                placeholder="Enter image"
+                name="description"
+                placeholder="Enter description"
                 className="rounded-lg w-full border border-gray-300 p-2"
               />
-              {!!errors.image && (
-                <div className="text-red-500 pt-2">{errors.image}</div>
+              {!!errors.description && (
+                <div className="text-red-500 pt-2">{errors.description}</div>
+              )}
+            </div>
+            <div className="mt-4">
+              <label className="text-xl font-semibold text-black">
+                Category
+              </label>
+              <Field
+                type="text"
+                name="category"
+                placeholder="Enter category"
+                className="rounded-lg w-full border border-gray-300 p-2"
+              />
+              {!!errors.category && (
+                <div className="text-red-500 pt-2">{errors.category}</div>
               )}
             </div>
 
@@ -101,7 +137,7 @@ const AddProductForm = ({ initialValue }) => {
               <button
                 type="submit"
                 className={clsx(
-                  "bg-red-500 px-4 py-2 rounded-md text-white",
+                  "bg-black hover:bg-primary-clr text-2xl px-6 py-2 rounded-lg text-white",
                   mutation.isPending ? "opacity-50" : null
                 )}
                 disabled={mutation.isPending}
