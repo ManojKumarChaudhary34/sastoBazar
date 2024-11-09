@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProduct } from "../api";
+import { deleteProduct, updateProduct } from "../api";
 
 const Card = ({ id, image, title, price, count }) => {
   const queryClient = useQueryClient();
@@ -7,10 +7,32 @@ const Card = ({ id, image, title, price, count }) => {
   const deleteMutation = useMutation({
     mutationFn: (id) => deleteProduct(id),
     onSuccess: (data, id) => {
-      console.log(data, id);
+      console.log("deleted data is:", data, id);
       queryClient.setQueryData(["getProducts"], (currProduct) => {
         return currProduct?.filter((productId) => productId.id !== id);
       });
+      alert("Product deleted successfully");
+    },
+  });
+  //function to update product
+  const updateMutation = useMutation({
+    mutationFn: (id) => updateProduct(id),
+    onSuccess: (data, id) => {
+      console.log("updated data is:", data, id);
+      queryClient.setQueryData(["getProducts"], (currProduct) => {
+        return currProduct?.map((product) =>
+          product.id == id
+            ? {
+                ...product,
+                title: data.title,
+                price: data.price,
+                image: data.image,
+                count: data.count,
+              }
+            : product
+        );
+      });
+      alert("Product updated successfully");
     },
   });
   return (
@@ -32,7 +54,7 @@ const Card = ({ id, image, title, price, count }) => {
         <div className="flex flex-col gap-1 mt-1 mr-1 absolute top-0 right-0 ">
           <img
             className="h-9 hidden group-hover:block p-2 hover:bg-black rounded-xl"
-            onClick={() => alert("clicked", id)}
+            onClick={() => updateMutation.mutate(id)}
             src="update.png"
             alt="edit image"
           />

@@ -25,6 +25,7 @@ const addProductFormSchema = object({
 
 const AddProductForm = () => {
   const client = useQueryClient();
+  //function to add new product
   const mutation = useMutation({
     mutationFn: addProduct,
     onSuccess: (data) => {
@@ -39,6 +40,7 @@ const AddProductForm = () => {
   });
 
   return (
+    //form
     <Formik
       initialValues={{
         title: "",

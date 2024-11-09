@@ -42,7 +42,13 @@ export const updateProduct = async (id) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(),
+    body: JSON.stringify({
+      title: "test product",
+      price: 13.5,
+      description: "lorem ipsum set",
+      image: "https://i.pravatar.cc",
+      category: "electronic",
+    }),
   });
   if (!response.ok) {
     throw new Error("Network response was not ok");
