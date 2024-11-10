@@ -20,4 +20,5 @@ html{
 p,li,a{
   font-size: 1.7rem;
   letter-spacing: .1rem;
+  font-weight: 100;
 }
